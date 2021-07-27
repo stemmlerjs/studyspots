@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    ports:
+      - 6379:6379
+  
+  mysql:
+    image: mysql
+    container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${STUDYSPOTS_DB_USER}
+      MYSQL_DATABASE: ${STUDYSPOTS_DB_NAME}
+      MYSQL_USER: ${STUDYSPOTS_DB_USER}
+      MYSQL_PASSWORD: ${STUDYSPOTS_DB_PASS}
+    ports:
+      - 3306:3306
+      - 33060:33060
+
+  adminer:
+    image: adminer
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+    links:
+      - mysql    
+
+  backend:
+    container_name: studyspots_back
+    image: stemmlerjs/studyspots-back:1.0
+    command: npm run start:dev
+    volumes: [
+      '.:/src',
+      '/src/node_modules'
+    ]
+    # Since variables are only used for substitution in configs, we have
+    # to type them all out here
+    environment: 
+      - STUDYSPOTS_DB_USER=${STUDYSPOTS_DB_USER}
+      - STUDYSPOTS_DB_PASS=${STUDYSPOTS_DB_PASS}
+      - STUDYSPOTS_DB_HOST=${STUDYSPOTS_DB_HOST}
+      - STUDYSPOTS_DB_NAME=${STUDYSPOTS_DB_NAME}
+      - NODE_ENV=${NODE_ENV}
+      - STUDYSPOTS_ENV=${STUDYSPOTS_ENV}
+      - STUDYSPOTS_DB_SHOULD_USE_CONNECTION_STRING=${STUDYSPOTS_DB_SHOULD_USE_CONNECTION_STRING}
+
+
+    depends_on: 
+      - redis
+      - mysql

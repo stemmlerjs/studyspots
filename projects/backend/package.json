@@ -4,10 +4,13 @@
   "description": "A basic typescript app starter for newbies in 2019.",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./build && tsc",
+    "build": "npx rimraf ./build && tsc",
     "start:dev": "nodemon",
     "start": "npm run build && node build/index.js",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix ",
+    "test:unit": "jest --config=jest.unit.config.js",
+    "test:integration": "jest --config=jest.integration.config.js",
+    "test:acceptance": "jest --config=jest.acceptance.config.js",
     "prettier-format": "run-script-os",
     "prettier-format:win32": "prettier --config .prettierrc \"./src/**/*.ts\" --write",
     "prettier-format:darwin:linux": "prettier --config .prettierrc 'src/**/*.ts' --write",
@@ -21,7 +24,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && npm run prettier-format && npm run lint"
+      "pre-commit": "npm run test && npm run prettier-format"
     }
   },
   "keywords": [],
@@ -46,8 +49,12 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "apollo-server": "^3.0.2",
+    "dotenv": "^10.0.0",
     "eslint-plugin-jest": "^24.1.0",
+    "graphql": "^15.5.1",
     "jest": "^26.5.3",
+    "sequelize": "^6.6.5",
     "ts-jest": "^26.4.1"
   }
 }
