@@ -1,12 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import config from '../config/config';
-import * as Sequelize from 'sequelize';
+import * as Sequelize from 'sequelize'
 
 const sequelize = config.connection;
 
 // turns base_user => BaseUser
-function toCamelCase(str) {
+function toCamelCase(str: string): string {
   const _ = str.indexOf('_');
   if (~_) {
     return toCamelCase(
@@ -37,7 +37,7 @@ const createModels = () => {
         !~t.indexOf('index') &&
         !~t.indexOf('.map'),
     )
-    .map(model => sequelize.import(__dirname + '/' + model));
+    .map(model => require(__dirname + '/' + model).default);
 
   // Camel case the models
   for (let i = 0; i < modelsList.length; i++) {
@@ -56,6 +56,7 @@ const createModels = () => {
   models['Sequelize'] = Sequelize;
 
   modelsLoaded = true;
+  console.log('[DB]: Connected to the database.')
 
   return models;
 };

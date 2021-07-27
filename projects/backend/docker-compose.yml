@@ -12,7 +12,7 @@ services:
     container_name: mysql
     command: --default-authentication-plugin=mysql_native_password
     environment: 
-      MYSQL_ROOT_PASSWORD: ${STUDYSPOTS_DB_USER}
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
       MYSQL_DATABASE: ${STUDYSPOTS_DB_NAME}
       MYSQL_USER: ${STUDYSPOTS_DB_USER}
       MYSQL_PASSWORD: ${STUDYSPOTS_DB_PASS}
@@ -46,8 +46,8 @@ services:
       - STUDYSPOTS_DB_NAME=${STUDYSPOTS_DB_NAME}
       - NODE_ENV=${NODE_ENV}
       - STUDYSPOTS_ENV=${STUDYSPOTS_ENV}
-      - STUDYSPOTS_DB_SHOULD_USE_CONNECTION_STRING=${STUDYSPOTS_DB_SHOULD_USE_CONNECTION_STRING}
-
+      - REDIS_SERVER_PORT=${REDIS_SERVER_PORT}
+      - REDIS_SERVER_URL=${REDIS_SERVER_URL}
 
     depends_on: 
       - redis

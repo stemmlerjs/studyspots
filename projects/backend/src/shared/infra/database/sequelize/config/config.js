@@ -39,15 +39,9 @@ const {
   username, password, database, host, dialect 
 } = databaseCredentials[NODE_ENV];
 
-module.exports = databaseCredentials;
+module.exports.databaseConfig = databaseCredentials;
 
 const mode = STUDYSPOTS_ENV;
-const confirmValidMode = () => 
-  mode !== "dev" || mode !== "test" || mode !== "prod" 
-  ? console.log("Must start in dev, test, or prod mode") && process.exit(1)
-  : '';
-
-confirmValidMode();
 
 console.log(`[DB]: Connecting to the database in ${mode} mode.`)
 

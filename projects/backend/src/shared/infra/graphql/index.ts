@@ -34,9 +34,26 @@ const resolvers = {
   },
 };
 
-const graphQLServer = new ApolloServer({ typeDefs, resolvers });
+class GraphQLServer {
+  public instance: ApolloServer;
 
-// The `listen` method launches a web server.
-graphQLServer.listen(3000).then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  constructor () {
+    this.instance = new ApolloServer({ typeDefs, resolvers });
+  }
+
+  async start () {
+    const { url } = await this.instance.listen(3000);
+    console.log(`[GraphQL] 🚀  Server ready at ${url}`);
+  }
+
+  async stop () {
+    await this.instance.stop();
+    console.log(`[GraphQL] Server stopped`)
+  }
+}
+
+const graphQLServer = new GraphQLServer();
+
+graphQLServer.start();
+
+export { graphQLServer }

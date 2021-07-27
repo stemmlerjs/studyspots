@@ -7,7 +7,7 @@
     "build": "npx rimraf ./build && tsc",
     "start:dev": "nodemon",
     "start": "npm run build && node build/index.js",
-    "lint": "eslint . --ext .ts --fix ",
+    "lint": "eslint . --ext .ts --fix",
     "test:unit": "jest --config=jest.unit.config.js",
     "test:integration": "jest --config=jest.integration.config.js",
     "test:acceptance": "jest --config=jest.acceptance.config.js",
@@ -34,6 +34,8 @@
     "@types/jest": "^26.0.14",
     "@types/node": "^12.20.16",
     "@types/react": "^17.0.14",
+    "@types/redis": "^2.8.31",
+    "@types/sequelize": "^4.28.10",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",
@@ -54,6 +56,8 @@
     "eslint-plugin-jest": "^24.1.0",
     "graphql": "^15.5.1",
     "jest": "^26.5.3",
+    "mysql2": "^2.2.5",
+    "redis": "^3.1.2",
     "sequelize": "^6.6.5",
     "ts-jest": "^26.4.1"
   }

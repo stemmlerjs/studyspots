@@ -1,4 +1,5 @@
-export default (sequelize, DataTypes) => {
+
+export default (sequelize: any, DataTypes: any) => {
   const BaseUser = sequelize.define(
     'base_user',
     {
@@ -46,7 +47,7 @@ export default (sequelize, DataTypes) => {
     },
   );
 
-  BaseUser.associate = models => {
+  BaseUser.associate = (models: any) => {
     BaseUser.hasOne(models.Member, { as: 'Member', foreignKey: 'member_id' });
   };
 

@@ -1,3 +1,6 @@
+
+require('dotenv').config({ path:__dirname + '/.env.dev' })
+
 module.exports = {
   transform: {
     '^.+\\.ts?$': 'ts-jest'
