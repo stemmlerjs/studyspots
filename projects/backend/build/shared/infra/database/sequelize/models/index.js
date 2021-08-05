@@ -30,13 +30,14 @@ var Sequelize = __importStar(require("sequelize"));
 var sequelize = config_1.default.connection;
 // turns base_user => BaseUser
 function toCamelCase(str) {
-    var _ = str.indexOf("_");
+    var _ = str.indexOf('_');
     if (~_) {
-        return toCamelCase(str.substring(0, _)
-            + str.substring(_ + 1)
+        return toCamelCase(str.substring(0, _) +
+            str
+                .substring(_ + 1)
                 .substring(0, 1)
-                .toUpperCase()
-            + str.substring(_ + 2));
+                .toUpperCase() +
+            str.substring(_ + 2));
     }
     else {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
@@ -48,9 +49,14 @@ var createModels = function () {
     if (modelsLoaded)
         return models;
     // Get all models
-    var modelsList = fs.readdirSync(path.resolve(__dirname, "./"))
-        .filter(function (t) { return (~t.indexOf('.ts') || ~t.indexOf('.js')) && !~t.indexOf("index") && !~t.indexOf(".map"); })
-        .map(function (model) { return sequelize.import(__dirname + '/' + model); });
+    var modelsList = fs
+        .readdirSync(path.resolve(__dirname, './'))
+        .filter(function (t) {
+        return (~t.indexOf('.ts') || ~t.indexOf('.js')) &&
+            !~t.indexOf('index') &&
+            !~t.indexOf('.map');
+    })
+        .map(function (model) { return require(__dirname + '/' + model).default; });
     // Camel case the models
     for (var i = 0; i < modelsList.length; i++) {
         var modelName = toCamelCase(modelsList[i].name);
@@ -65,6 +71,7 @@ var createModels = function () {
     models['sequelize'] = sequelize;
     models['Sequelize'] = Sequelize;
     modelsLoaded = true;
+    console.log('[DB]: Connected to the database.');
     return models;
 };
 exports.createModels = createModels;

@@ -1,9 +1,6 @@
-
-import { connection } from './config'
-
+import { connection } from './config';
 
 describe('db', () => {
-
   it('can connect', async () => {
     try {
       await connection.authenticate();
@@ -13,5 +10,4 @@ describe('db', () => {
       throw error;
     }
   });
-  
 });

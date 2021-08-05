@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import config from '../config/config';
-import * as Sequelize from 'sequelize'
+import * as Sequelize from 'sequelize';
 
 const sequelize = config.connection;
 
@@ -56,7 +56,7 @@ const createModels = () => {
   models['Sequelize'] = Sequelize;
 
   modelsLoaded = true;
-  console.log('[DB]: Connected to the database.')
+  console.log('[DB]: Connected to the database.');
 
   return models;
 };

@@ -52,36 +52,36 @@ exports.default = {
                                 type: Sequelize.UUID,
                                 defaultValue: Sequelize.UUIDV4,
                                 allowNull: false,
-                                primaryKey: true
+                                primaryKey: true,
                             },
                             user_email: {
                                 type: Sequelize.STRING(250),
                                 allowNull: false,
-                                unique: true
+                                unique: true,
                             },
                             is_email_verified: {
                                 type: Sequelize.BOOLEAN,
                                 allowNull: false,
-                                defaultValue: false
+                                defaultValue: false,
                             },
                             username: {
                                 type: Sequelize.STRING(250),
-                                allowNull: false
+                                allowNull: false,
                             },
                             user_password: {
                                 type: Sequelize.STRING,
                                 allowNull: true,
-                                defaultValue: null
+                                defaultValue: null,
                             },
                             is_admin_user: {
                                 type: Sequelize.BOOLEAN,
                                 allowNull: false,
-                                defaultValue: false
+                                defaultValue: false,
                             },
                             is_deleted: {
                                 type: Sequelize.BOOLEAN,
                                 allowNull: false,
-                                defaultValue: false
+                                defaultValue: false,
                             },
                             created_at: {
                                 type: Sequelize.DATE,
@@ -91,250 +91,260 @@ exports.default = {
                             updated_at: {
                                 type: Sequelize.DATE,
                                 allowNull: false,
-                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                            }
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+                            },
                         });
                     };
-                    CREATE_MEMBER = function () { return (queryInterface.createTable('member', {
-                        member_id: {
-                            type: Sequelize.UUID,
-                            defaultValue: Sequelize.UUIDV4,
-                            allowNull: false,
-                            primaryKey: true
-                        },
-                        member_base_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            primaryKey: true,
-                            references: {
-                                model: 'base_user',
-                                key: 'base_user_id'
+                    CREATE_MEMBER = function () {
+                        return queryInterface.createTable('member', {
+                            member_id: {
+                                type: Sequelize.UUID,
+                                defaultValue: Sequelize.UUIDV4,
+                                allowNull: false,
+                                primaryKey: true,
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        reputation: {
-                            type: Sequelize.INTEGER,
-                            allowNull: false,
-                            defaultValue: 0
-                        },
-                        created_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-                        },
-                        updated_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                        }
-                    })); };
-                    CREATE_POST = function () { return (queryInterface.createTable('post', {
-                        post_id: {
-                            type: Sequelize.UUID,
-                            defaultValue: Sequelize.UUIDV4,
-                            allowNull: false,
-                            primaryKey: true
-                        },
-                        member_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            references: {
-                                model: 'member',
-                                key: 'member_id'
+                            member_base_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                primaryKey: true,
+                                references: {
+                                    model: 'base_user',
+                                    key: 'base_user_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        type: {
-                            type: Sequelize.STRING(30),
-                            allowNull: false
-                        },
-                        title: {
-                            type: Sequelize.TEXT,
-                            allowNull: true
-                        },
-                        text: {
-                            type: Sequelize.TEXT,
-                            allowNull: true
-                        },
-                        link: {
-                            type: Sequelize.TEXT,
-                            allowNull: true
-                        },
-                        slug: {
-                            type: Sequelize.STRING(150),
-                            allowNull: false,
-                        },
-                        points: {
-                            type: Sequelize.INTEGER,
-                            allowNull: false,
-                            defaultValue: 0
-                        },
-                        total_num_comments: {
-                            type: Sequelize.INTEGER,
-                            allowNull: false,
-                            defaultValue: 0
-                        },
-                        created_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-                        },
-                        updated_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                        }
-                    })); };
-                    CREATE_COMMENT = function () { return (queryInterface.createTable('comment', {
-                        comment_id: {
-                            type: Sequelize.UUID,
-                            defaultValue: Sequelize.UUIDV4,
-                            allowNull: false,
-                            primaryKey: true
-                        },
-                        member_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            references: {
-                                model: 'member',
-                                key: 'member_id'
+                            reputation: {
+                                type: Sequelize.INTEGER,
+                                allowNull: false,
+                                defaultValue: 0,
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        parent_comment_id: {
-                            type: Sequelize.UUID,
-                            allowNull: true,
-                            references: {
-                                model: 'comment',
-                                key: 'comment_id'
+                            created_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        post_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            references: {
-                                model: 'post',
-                                key: 'post_id'
+                            updated_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        text: {
-                            type: Sequelize.TEXT,
-                            allowNull: false
-                        },
-                        points: {
-                            type: Sequelize.INTEGER,
-                            allowNull: false,
-                            defaultValue: 1
-                        },
-                        created_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-                        },
-                        updated_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                        }
-                    })); };
-                    CREATE_POST_VOTE = function () { return (queryInterface.createTable('post_vote', {
-                        post_vote_id: {
-                            type: Sequelize.UUID,
-                            defaultValue: Sequelize.UUIDV4,
-                            allowNull: false,
-                            primaryKey: true
-                        },
-                        post_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            references: {
-                                model: 'post',
-                                key: 'post_id'
+                        });
+                    };
+                    CREATE_POST = function () {
+                        return queryInterface.createTable('post', {
+                            post_id: {
+                                type: Sequelize.UUID,
+                                defaultValue: Sequelize.UUIDV4,
+                                allowNull: false,
+                                primaryKey: true,
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        member_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            references: {
-                                model: 'member',
-                                key: 'member_id'
+                            member_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                references: {
+                                    model: 'member',
+                                    key: 'member_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        type: {
-                            type: Sequelize.STRING(10),
-                            allowNull: false
-                        },
-                        created_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-                        },
-                        updated_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                        }
-                    })); };
-                    CREATE_COMMENT_VOTE = function () { return (queryInterface.createTable('comment_vote', {
-                        comment_vote_id: {
-                            type: Sequelize.UUID,
-                            defaultValue: Sequelize.UUIDV4,
-                            allowNull: false,
-                            primaryKey: true
-                        },
-                        comment_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            references: {
-                                model: 'comment',
-                                key: 'comment_id'
+                            type: {
+                                type: Sequelize.STRING(30),
+                                allowNull: false,
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        member_id: {
-                            type: Sequelize.UUID,
-                            allowNull: false,
-                            references: {
-                                model: 'member',
-                                key: 'member_id'
+                            title: {
+                                type: Sequelize.TEXT,
+                                allowNull: true,
                             },
-                            onDelete: 'cascade',
-                            onUpdate: 'cascade',
-                        },
-                        type: {
-                            type: Sequelize.STRING(10),
-                            allowNull: false
-                        },
-                        created_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-                        },
-                        updated_at: {
-                            type: Sequelize.DATE,
-                            allowNull: false,
-                            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
-                        }
-                    })); };
+                            text: {
+                                type: Sequelize.TEXT,
+                                allowNull: true,
+                            },
+                            link: {
+                                type: Sequelize.TEXT,
+                                allowNull: true,
+                            },
+                            slug: {
+                                type: Sequelize.STRING(150),
+                                allowNull: false,
+                            },
+                            points: {
+                                type: Sequelize.INTEGER,
+                                allowNull: false,
+                                defaultValue: 0,
+                            },
+                            total_num_comments: {
+                                type: Sequelize.INTEGER,
+                                allowNull: false,
+                                defaultValue: 0,
+                            },
+                            created_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+                            },
+                            updated_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+                            },
+                        });
+                    };
+                    CREATE_COMMENT = function () {
+                        return queryInterface.createTable('comment', {
+                            comment_id: {
+                                type: Sequelize.UUID,
+                                defaultValue: Sequelize.UUIDV4,
+                                allowNull: false,
+                                primaryKey: true,
+                            },
+                            member_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                references: {
+                                    model: 'member',
+                                    key: 'member_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
+                            },
+                            parent_comment_id: {
+                                type: Sequelize.UUID,
+                                allowNull: true,
+                                references: {
+                                    model: 'comment',
+                                    key: 'comment_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
+                            },
+                            post_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                references: {
+                                    model: 'post',
+                                    key: 'post_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
+                            },
+                            text: {
+                                type: Sequelize.TEXT,
+                                allowNull: false,
+                            },
+                            points: {
+                                type: Sequelize.INTEGER,
+                                allowNull: false,
+                                defaultValue: 1,
+                            },
+                            created_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+                            },
+                            updated_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+                            },
+                        });
+                    };
+                    CREATE_POST_VOTE = function () {
+                        return queryInterface.createTable('post_vote', {
+                            post_vote_id: {
+                                type: Sequelize.UUID,
+                                defaultValue: Sequelize.UUIDV4,
+                                allowNull: false,
+                                primaryKey: true,
+                            },
+                            post_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                references: {
+                                    model: 'post',
+                                    key: 'post_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
+                            },
+                            member_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                references: {
+                                    model: 'member',
+                                    key: 'member_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
+                            },
+                            type: {
+                                type: Sequelize.STRING(10),
+                                allowNull: false,
+                            },
+                            created_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+                            },
+                            updated_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+                            },
+                        });
+                    };
+                    CREATE_COMMENT_VOTE = function () {
+                        return queryInterface.createTable('comment_vote', {
+                            comment_vote_id: {
+                                type: Sequelize.UUID,
+                                defaultValue: Sequelize.UUIDV4,
+                                allowNull: false,
+                                primaryKey: true,
+                            },
+                            comment_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                references: {
+                                    model: 'comment',
+                                    key: 'comment_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
+                            },
+                            member_id: {
+                                type: Sequelize.UUID,
+                                allowNull: false,
+                                references: {
+                                    model: 'member',
+                                    key: 'member_id',
+                                },
+                                onDelete: 'cascade',
+                                onUpdate: 'cascade',
+                            },
+                            type: {
+                                type: Sequelize.STRING(10),
+                                allowNull: false,
+                            },
+                            created_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+                            },
+                            updated_at: {
+                                type: Sequelize.DATE,
+                                allowNull: false,
+                                defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+                            },
+                        });
+                    };
                     return [4 /*yield*/, runner_1.default.run([
                             function () { return CREATE_BASE_USER(); },
                             function () { return CREATE_MEMBER(); },
                             function () { return CREATE_POST(); },
                             function () { return CREATE_COMMENT(); },
                             function () { return CREATE_POST_VOTE(); },
-                            function () { return CREATE_COMMENT_VOTE(); }
+                            function () { return CREATE_COMMENT_VOTE(); },
                         ])];
                 case 1:
                     _a.sent();
@@ -343,8 +353,6 @@ exports.default = {
         });
     }); },
     down: function (queryInterface, Sequelize) {
-        return runner_1.default.run([
-            function () { return queryInterface.dropTable('base_user'); }
-        ]);
-    }
+        return runner_1.default.run([function () { return queryInterface.dropTable('base_user'); }]);
+    },
 };

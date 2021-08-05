@@ -52,3 +52,5 @@ services:
     depends_on: 
       - redis
       - mysql
+    ports:
+      - 3000:3000

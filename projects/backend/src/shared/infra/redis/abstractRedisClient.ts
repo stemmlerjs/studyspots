@@ -1,115 +1,114 @@
-
-import { RedisClient } from 'redis'
+import { RedisClient } from 'redis';
 
 export abstract class AbstractRedisClient {
   private tokenExpiryTime: number = 604800;
   protected client: RedisClient;
 
-  constructor (client: RedisClient) {
+  constructor(client: RedisClient) {
     this.client = client;
   }
 
-  public async count (key: string): Promise<number> {
+  public async count(key: string): Promise<number> {
     const allKeys = await this.getAllKeys(key);
     return allKeys.length;
   }
 
-  public exists (key: string): Promise<boolean> {
+  public exists(key: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       return this.count(key)
-        .then((count) => {
-          return resolve(count >= 1 ? true : false)
+        .then(count => {
+          return resolve(count >= 1 ? true : false);
         })
-        .catch((err) => {
+        .catch(err => {
           return reject(err);
-        })
-    })
+        });
+    });
   }
 
-  public getOne (key: string): Promise<string> {
+  public getOne(key: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.client.get(key, function(err: Error | null, reply: string | null) {
         if (err || reply === null) {
-          return reject(err)
+          return reject(err);
         } else {
           return resolve(reply);
         }
       });
-    })
+    });
   }
 
   public getAllKeys(wildcard: string): Promise<string[]> {
     return new Promise((resolve, reject) => {
-      this.client.keys(wildcard,
+      this.client.keys(
+        wildcard,
         //@ts-ignore
         async (error: Error, results: string[]) => {
           if (error) {
-            return reject(error)
+            return reject(error);
           } else {
             return resolve(results);
           }
-        })
-    })
-  } 
+        },
+      );
+    });
+  }
 
-  public getAllKeyValue (wildcard: string): Promise<any[]> {
+  public getAllKeyValue(wildcard: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
-      this.client.keys(wildcard,
+      this.client.keys(
+        wildcard,
         //@ts-ignore
         async (error: Error, results: string[]) => {
           if (error) {
-            return reject(error)
+            return reject(error);
           } else {
             const allResults = await Promise.all(
-              results.map( async (key) => {
+              results.map(async key => {
                 const value = await this.getOne(key);
-                return { key, value }
-              })
+                return { key, value };
+              }),
             );
             return resolve(allResults);
           }
-        })
-    })
+        },
+      );
+    });
   }
 
   public set(key: string, value: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.client.set(key, value, 
-         (error, reply) => {
-          if (error) {
-            return reject(error)
-          } else {
-            this.client.expire(key, this.tokenExpiryTime)
-            return resolve(reply)
-          }
+      this.client.set(key, value, (error, reply) => {
+        if (error) {
+          return reject(error);
+        } else {
+          this.client.expire(key, this.tokenExpiryTime);
+          return resolve(reply);
+        }
       });
-    })
+    });
   }
 
-  public deleteOne (key: string): Promise<number> {
+  public deleteOne(key: string): Promise<number> {
     return new Promise((resolve, reject) => {
-      this.client.del(key,
-        (error, reply) => {
-          if (error) {
-            return reject(error)
-          } else {
-            return resolve(reply)
-          }
+      this.client.del(key, (error, reply) => {
+        if (error) {
+          return reject(error);
+        } else {
+          return resolve(reply);
+        }
       });
-    })
+    });
   }
 
-  public testConnection (): Promise<any> {
+  public testConnection(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.client.set('test', 'connected', 
-        (err) => {
-          if (err) {
-            reject();
-          } else {
-            resolve(true);
-          }
-      })
-    })
+      this.client.set('test', 'connected', err => {
+        if (err) {
+          reject();
+        } else {
+          resolve(true);
+        }
+      });
+    });
   }
 }
-

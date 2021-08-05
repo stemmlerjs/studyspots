@@ -26,14 +26,8 @@ var databaseCredentials = {
     }
 };
 var _b = databaseCredentials[NODE_ENV], username = _b.username, password = _b.password, database = _b.database, host = _b.host, dialect = _b.dialect;
-module.exports = databaseCredentials;
+module.exports.databaseConfig = databaseCredentials;
 var mode = STUDYSPOTS_ENV;
-var confirmValidMode = function () {
-    return mode !== "dev" || mode !== "test" || mode !== "prod"
-        ? console.log("Must start in dev, test, or prod mode") && process.exit(1)
-        : '';
-};
-confirmValidMode();
 console.log("[DB]: Connecting to the database in " + mode + " mode.");
 var databaseConfig = {
     host: host,

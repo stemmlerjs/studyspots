@@ -61,30 +61,30 @@ function runner(promises) {
                          * This is an error that we can run into while seeding the same
                          * data. It's passable.
                          */
-                        if (err_1.original.code == "ER_DUP_ENTRY") {
+                        if (err_1.original.code == 'ER_DUP_ENTRY') {
                             console.log(">>> Passable error occurred: ER_DUP_ENTRY");
                         }
-                        /**
-                         * This is an error that we can run into where the same
-                         * field name already exists.
-                         */
-                        else if (err_1.original.code == "ER_DUP_FIELDNAME") {
+                        else if (err_1.original.code == 'ER_DUP_FIELDNAME') {
+                            /**
+                             * This is an error that we can run into where the same
+                             * field name already exists.
+                             */
                             console.log(">>> Passable error occurred: ER_DUP_FIELDNAME");
                         }
-                        /**
-                         * If the field doesn't exist and we're trying to drop it,
-                         * that's cool. We can pass this.
-                         */
-                        else if (err_1.original.code == "ER_CANT_DROP_FIELD_OR_KEY") {
+                        else if (err_1.original.code == 'ER_CANT_DROP_FIELD_OR_KEY') {
+                            /**
+                             * If the field doesn't exist and we're trying to drop it,
+                             * that's cool. We can pass this.
+                             */
                             console.log(">>> Passable error occurred: ER_CANT_DROP_FIELD_OR_KEY");
                         }
-                        else if (err_1.name == "SequelizeUnknownConstraintError") {
+                        else if (err_1.name == 'SequelizeUnknownConstraintError') {
                             console.log(">>> Passable error. Trying to remove constraint that's already been removed.");
                         }
-                        /**
-                         * Any other error
-                         */
                         else {
+                            /**
+                             * Any other error
+                             */
                             console.log(err_1);
                             throw new Error(err_1);
                         }
@@ -103,5 +103,5 @@ function runner(promises) {
     });
 }
 exports.default = {
-    run: runner
+    run: runner,
 };

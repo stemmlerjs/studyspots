@@ -6,21 +6,38 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "jest",
+    "test:dev": "jest --watchAll",
     "cypress:open": "cypress open"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.5",
     "date-fns": "^2.11.1",
+    "graphql": "^15.5.1",
     "gray-matter": "^4.0.2",
+    "mapbox-gl": "^2.4.0",
     "next": "^10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "remark": "^12.0.0",
-    "remark-html": "^12.0.0"
+    "remark-html": "^12.0.0",
+    "sass": "^1.37.5"
   },
   "devDependencies": {
+    "@types/cypress": "^1.1.3",
+    "@types/cypress-cucumber-preprocessor": "^4.0.1",
+    "@types/jest": "^26.0.24",
+    "@types/mapbox-gl": "^2.3.3",
     "@types/node": "^16.3.1",
     "@types/react": "^17.0.14",
     "cypress": "^7.7.0",
+    "cypress-cucumber-preprocessor": "^4.2.0",
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.4",
+    "tsify": "^5.0.4",
     "typescript": "^4.3.5"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   }
 }

@@ -1,4 +1,3 @@
-
 export default (sequelize: any, DataTypes: any) => {
   const BaseUser = sequelize.define(
     'base_user',
